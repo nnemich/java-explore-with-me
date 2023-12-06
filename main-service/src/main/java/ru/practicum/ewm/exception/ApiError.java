@@ -1,11 +1,11 @@
 package ru.practicum.ewm.exception;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Getter;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Builder

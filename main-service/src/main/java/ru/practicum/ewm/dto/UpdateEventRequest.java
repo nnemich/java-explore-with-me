@@ -1,17 +1,16 @@
 package ru.practicum.ewm.dto;
 
-import java.time.LocalDateTime;
-
-import javax.validation.Valid;
-import javax.validation.constraints.PositiveOrZero;
-import javax.validation.constraints.Size;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
+
+import javax.validation.Valid;
+import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter

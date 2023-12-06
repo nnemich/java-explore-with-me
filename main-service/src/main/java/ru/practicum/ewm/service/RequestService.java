@@ -1,8 +1,8 @@
 package ru.practicum.ewm.service;
 
-import java.util.List;
-
 import ru.practicum.ewm.dto.ParticipationRequestDto;
+
+import java.util.List;
 
 public interface RequestService {
     ParticipationRequestDto addNewRequest(Long userId, Long eventId);

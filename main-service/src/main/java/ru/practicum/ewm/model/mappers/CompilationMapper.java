@@ -1,11 +1,11 @@
 package ru.practicum.ewm.model.mappers;
 
-import java.util.stream.Collectors;
-
 import lombok.experimental.UtilityClass;
 import ru.practicum.ewm.dto.CompilationDto;
 import ru.practicum.ewm.dto.NewCompilationDto;
 import ru.practicum.ewm.model.Compilation;
+
+import java.util.stream.Collectors;
 
 @UtilityClass
 public class CompilationMapper {

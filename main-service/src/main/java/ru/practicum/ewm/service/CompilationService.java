@@ -1,10 +1,10 @@
 package ru.practicum.ewm.service;
 
-import java.util.List;
-
 import ru.practicum.ewm.dto.CompilationDto;
 import ru.practicum.ewm.dto.NewCompilationDto;
 import ru.practicum.ewm.dto.UpdateCompilationDto;
+
+import java.util.List;
 
 public interface CompilationService {
     CompilationDto addCompilation(NewCompilationDto compilationDto);
