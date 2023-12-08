@@ -1,11 +1,10 @@
 package ru.practicum.ewm.model;
 
+
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,31 +16,36 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.practicum.ewm.model.enums.RequestStatus;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-@Entity(name = "requests")
-public class Request {
+@Entity(name = "comments")
+public class Comment {
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "create_date", nullable = false)
-    private LocalDateTime created;
+    @Column(name = "text", nullable = false)
+    private String text;
 
     @ManyToOne
     @JoinColumn(name = "event_id")
     private Event event;
 
     @ManyToOne
-    @JoinColumn(name = "requester_id")
-    private User requester;
+    @JoinColumn(name = "author_id")
+    private User author;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
-    private RequestStatus status;
+    @Column(name = "created")
+    @CreationTimestamp
+    private LocalDateTime created;
+
+    @UpdateTimestamp
+    @Column(name = "last_updated_on")
+    private LocalDateTime lastUpdatedOn;
 }

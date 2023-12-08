@@ -1,15 +1,21 @@
-package ru.practicum.ewm.dto;
+package ru.practicum.ewm.dto.event;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.*;
-import org.hibernate.validator.constraints.Length;
+import java.time.LocalDateTime;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
-import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
+import ru.practicum.ewm.dto.location.LocationDto;
 
 @Getter
 @Setter
