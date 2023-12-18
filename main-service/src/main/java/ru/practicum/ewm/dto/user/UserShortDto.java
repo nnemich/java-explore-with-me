@@ -1,6 +1,4 @@
-package ru.practicum.ewm.dto;
-
-import java.util.List;
+package ru.practicum.ewm.dto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CaseUpdatedStatusDto {
-    private List<Long> idsFromUpdateStatus;
-    private List<Long> processedIds;
+public class UserShortDto {
+    private Long id;
+    private String name;
 }

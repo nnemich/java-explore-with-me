@@ -1,5 +1,15 @@
 package ru.practicum.ewm.service.impl;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletRequest;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -15,11 +25,27 @@ import org.springframework.stereotype.Service;
 import ru.practicum.ewm.EndpointHit;
 import ru.practicum.ewm.StatsClient;
 import ru.practicum.ewm.ViewStats;
-import ru.practicum.ewm.dto.*;
+import ru.practicum.ewm.dto.CaseUpdatedStatusDto;
+import ru.practicum.ewm.dto.comment.CountCommentsByEventDto;
+import ru.practicum.ewm.dto.event.EventFullDto;
+import ru.practicum.ewm.dto.event.EventShortDto;
+import ru.practicum.ewm.dto.event.NewEventDto;
+import ru.practicum.ewm.dto.event.SearchEventParams;
+import ru.practicum.ewm.dto.event.SearchEventParamsAdmin;
+import ru.practicum.ewm.dto.request.EventRequestStatusUpdateRequest;
+import ru.practicum.ewm.dto.request.EventRequestStatusUpdateResult;
+import ru.practicum.ewm.dto.request.ParticipationRequestDto;
+import ru.practicum.ewm.dto.request.UpdateEventAdminRequest;
+import ru.practicum.ewm.dto.request.UpdateEventRequest;
+import ru.practicum.ewm.dto.request.UpdateEventUserRequest;
 import ru.practicum.ewm.exception.ConflictException;
 import ru.practicum.ewm.exception.NotFoundException;
 import ru.practicum.ewm.exception.UncorrectedParametersException;
-import ru.practicum.ewm.model.*;
+import ru.practicum.ewm.model.Category;
+import ru.practicum.ewm.model.Event;
+import ru.practicum.ewm.model.Location;
+import ru.practicum.ewm.model.Request;
+import ru.practicum.ewm.model.User;
 import ru.practicum.ewm.model.enums.EventAdminState;
 import ru.practicum.ewm.model.enums.EventStatus;
 import ru.practicum.ewm.model.enums.EventUserState;
@@ -27,13 +53,13 @@ import ru.practicum.ewm.model.enums.RequestStatus;
 import ru.practicum.ewm.model.mappers.EventMapper;
 import ru.practicum.ewm.model.mappers.LocationMapper;
 import ru.practicum.ewm.model.mappers.RequestMapper;
-import ru.practicum.ewm.repository.*;
+import ru.practicum.ewm.repository.CategoryRepository;
+import ru.practicum.ewm.repository.CommentRepository;
+import ru.practicum.ewm.repository.EventRepository;
+import ru.practicum.ewm.repository.LocationRepository;
+import ru.practicum.ewm.repository.RequestRepository;
+import ru.practicum.ewm.repository.UserRepository;
 import ru.practicum.ewm.service.EventService;
-
-import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
-import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -42,6 +68,7 @@ public class EventServiceImpl implements EventService {
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
+    private final CommentRepository commentRepository;
     private final StatsClient statsClient;
     private final RequestRepository requestRepository;
     private final LocationRepository locationRepository;
@@ -340,9 +367,17 @@ public class EventServiceImpl implements EventService {
                 .stream().map(EventMapper::toEventShortDto).collect(Collectors.toList());
         Map<Long, Long> viewStatsMap = getViewsAllEvents(resultEvents);
 
+        List<CountCommentsByEventDto> commentsCountMap = commentRepository.countCommentByEvent(
+                resultEvents.stream().map(Event::getId).collect(Collectors.toList()));
+        Map<Long, Long> commentsCountToEventIdMap = commentsCountMap.stream().collect(Collectors.toMap(
+                CountCommentsByEventDto::getEventId, CountCommentsByEventDto::getCountComments));
+
         for (EventShortDto event : result) {
             Long viewsFromMap = viewStatsMap.getOrDefault(event.getId(), 0L);
             event.setViews(viewsFromMap);
+
+            Long commentCountFromMap = commentsCountToEventIdMap.getOrDefault(event.getId(), 0L);
+            event.setComments(commentCountFromMap);
         }
 
         return result;

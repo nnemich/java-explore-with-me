@@ -1,8 +1,13 @@
-package ru.practicum.ewm.dto;
-
-import lombok.*;
+package ru.practicum.ewm.dto.compilatoin;
 
 import java.util.Set;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import ru.practicum.ewm.dto.event.EventShortDto;
 
 @Getter
 @Setter

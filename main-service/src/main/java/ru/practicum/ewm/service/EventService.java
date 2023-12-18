@@ -1,9 +1,19 @@
 package ru.practicum.ewm.service;
 
-import ru.practicum.ewm.dto.*;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+
+import ru.practicum.ewm.dto.event.EventFullDto;
+import ru.practicum.ewm.dto.event.EventShortDto;
+import ru.practicum.ewm.dto.event.NewEventDto;
+import ru.practicum.ewm.dto.event.SearchEventParams;
+import ru.practicum.ewm.dto.event.SearchEventParamsAdmin;
+import ru.practicum.ewm.dto.request.EventRequestStatusUpdateRequest;
+import ru.practicum.ewm.dto.request.EventRequestStatusUpdateResult;
+import ru.practicum.ewm.dto.request.ParticipationRequestDto;
+import ru.practicum.ewm.dto.request.UpdateEventAdminRequest;
+import ru.practicum.ewm.dto.request.UpdateEventUserRequest;
 
 public interface EventService {
 
